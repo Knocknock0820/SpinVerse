@@ -771,6 +771,45 @@
                     "isPartOfComposite": false
                 }
             ]
+        },
+        {
+            "name": "Reset",
+            "id": "bb10f505-fbb2-47ec-990a-b5265227ee7d",
+            "actions": [
+                {
+                    "name": "New action",
+                    "type": "Button",
+                    "id": "0ec53360-60c9-44f7-bdcd-62a903ebda73",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                }
+            ],
+            "bindings": [
+                {
+                    "name": "",
+                    "id": "18e2f7e6-d439-42f8-88bd-3d1a2bac477f",
+                    "path": "",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Touch",
+                    "action": "New action",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "da29718f-437b-4051-8e55-4a01b627d586",
+                    "path": "",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "New action",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                }
+            ]
         }
     ],
     "controlSchemes": [

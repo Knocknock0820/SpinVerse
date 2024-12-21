@@ -8,6 +8,7 @@ public class GyroControl : MonoBehaviour
     private bool gyroEnabled;
     private Quaternion initialRotation; // To store the initial gyroscope rotation
     public GameObject player;
+    public float smoothSpeed = 5f;
 
     void Start()
     {
@@ -25,13 +26,13 @@ public class GyroControl : MonoBehaviour
     void Update()
     {
         if(Keyboard.current.kKey.wasPressedThisFrame){
-            initialRotation = new Quaternion(Input.gyro.attitude.x, Input.gyro.attitude.z, Input.gyro.attitude.y, Input.gyro.attitude.w);
+            initialRotation = new Quaternion(Input.gyro.attitude.x, -Input.gyro.attitude.z, Input.gyro.attitude.y, Input.gyro.attitude.w);
             Debug.Log("Reset gyroscope.");
         }
 
         if (SystemInfo.supportsGyroscope && !Input.gyro.enabled)
         {
-            initialRotation = new Quaternion(Input.gyro.attitude.x, Input.gyro.attitude.z, Input.gyro.attitude.y, Input.gyro.attitude.w);
+            initialRotation = new Quaternion(Input.gyro.attitude.x, -Input.gyro.attitude.z, Input.gyro.attitude.y, Input.gyro.attitude.w);
             Debug.Log("Re-enabled gyroscope.");
             Input.gyro.enabled = true;
         }
@@ -43,10 +44,19 @@ public class GyroControl : MonoBehaviour
         transform.position = player.transform.position;
 
         // Adjust rotation based on the initial calibration
-        Quaternion currentRotation = new Quaternion(Input.gyro.attitude.x, Input.gyro.attitude.z, Input.gyro.attitude.y, Input.gyro.attitude.w);
+        Quaternion currentRotation = new Quaternion(Input.gyro.attitude.x, -Input.gyro.attitude.z, Input.gyro.attitude.y, Input.gyro.attitude.w);
         Quaternion adjustedRotation = Quaternion.Inverse(initialRotation) * currentRotation;
-
+        // Debug.Log("initialRotation " + initialRotation +" adjust "+adjustedRotation);
         // Apply the adjusted rotation directly
         transform.rotation = adjustedRotation;
+        
+        //transform.rotation = Quaternion.Slerp(transform.rotation, adjustedRotation, Time.deltaTime * smoothSpeed);
+
+    }
+
+    public void resetGyro()
+    {
+        initialRotation = new Quaternion(Input.gyro.attitude.x, -Input.gyro.attitude.z, Input.gyro.attitude.y, Input.gyro.attitude.w);
+        Debug.Log("Reset gyroscope.");
     }
 }
